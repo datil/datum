@@ -40,5 +40,5 @@
   [& args]
   (println "\nCreating your server...")
   ; (server/start runnable-service)
-  (start {:path "/datum"}))
+  (start {:path "/"}))
 
