@@ -28,7 +28,8 @@
   :min-lein-version "2.0.0"
   :resource-paths ["config", "resources"]
   :profiles {:dev {:aliases {"run-dev" ["trampoline" "run" "-m" "datum.server/run-dev"]}
-                   :dependencies [[io.pedestal/pedestal.service-tools "0.3.0"]]}}
+                   :dependencies [[io.pedestal/pedestal.service-tools "0.3.0"]]}
+             :uberjar {:aot [datum.server]}}
   :plugins [[lein-immutant "2.0.0-alpha1"]]
   :main ^{:skip-aot true} datum.server)
 
