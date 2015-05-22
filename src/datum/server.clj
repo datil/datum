@@ -39,6 +39,7 @@
   "The entry-point for 'lein run'"
   [& args]
   (println "\nCreating your server...")
-  ; (server/start runnable-service)
-  (start {:path "/"}))
+  (server/start runnable-service)
+  ; (start {:path "/"})
+  )
 
