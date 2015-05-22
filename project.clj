@@ -29,7 +29,8 @@
   :resource-paths ["config", "resources"]
   :profiles {:dev {:aliases {"run-dev" ["trampoline" "run" "-m" "datum.server/run-dev"]}
                    :dependencies [[io.pedestal/pedestal.service-tools "0.3.0"]]}
-             :uberjar {:aot [datum.server]}}
+             :uberjar {:aot :all}}
+  :uberjar-name "datum.jar"
   :plugins [[lein-immutant "2.0.0-alpha1"]]
   :main ^{:skip-aot true} datum.server)
 
