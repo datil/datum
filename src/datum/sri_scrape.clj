@@ -39,11 +39,22 @@
        (html/select (rest (html/select resource [:table.reporte]))
                          [[:tr (html/attr? :class)]])))
 
+(defn main-store [resource]
+  (store-info
+       (concat
+         (html/select resource [:form :> [:table (html/nth-of-type 2)]
+                                [:tr html/last-child]])
+         ; (html/select resource [:form :> [:table (html/nth-of-type 3)]
+         ;                        [:tr (html/attr? :class)]])
+         )))
+
 (defn stores [resource]
   (map store-info
        (concat
-         (html/select resource [:form :> [:table (html/nth-of-type 2)] [:tr html/last-child]])
-         (html/select resource [:form :> [:table (html/nth-of-type 3)] [:tr (html/attr? :class)]]))))
+         (html/select resource [:form :> [:table (html/nth-of-type 2)]
+                                [:tr html/last-child]])
+         (html/select resource [:form :> [:table (html/nth-of-type 3)]
+                                [:tr (html/attr? :class)]]))))
 
 (defn buscar-contribuyente [ruc]
   (let [info-resp (fetch-url (str *base-url*
@@ -55,11 +66,12 @@
                                {:cookies {"JSESSIONID" (get-in info-resp [:cookies "JSESSIONID"])}})
         stores-resource (str-resource (:body stores-resp))]
     (conj (company-info info-resource)
+          (main-store stores-resource)
           (into [] (stores stores-resource)))))
 
 (defn info-del-contribuyente [ruc]
   (let [info (buscar-contribuyente ruc)
-        contribuyente (zipmap [:establecimientos :razon_social :nombre_comercial
+        contribuyente (zipmap [:establecimientos :matriz :razon_social :nombre_comercial
                                :estado :clase :tipo :obligado_contabilidad
                                :actividad_principal]
                               info)]

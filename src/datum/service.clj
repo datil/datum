@@ -5,7 +5,8 @@
               [io.pedestal.http.route.definition :refer [defroutes]]
               [ring.util.response :as ring-resp]
               [datum.sri-scrape :as sri]
-              [datum.ant-scrape :as ant]))
+              [datum.ant-scrape :as ant]
+              [clojure.stacktrace :as stack]))
 
 (defn home-page
   [request]
@@ -16,7 +17,8 @@
   (try 
     (ring-resp/response (sri/info-del-contribuyente (:ruc path-params)))
     (catch Exception e
-      (println e)
+      (stack/print-stack-trace e)
+      (.printStackTrace e)
       {:body {:error "Contribuyente no encontrado"} :status 404})))
 
 (defn find-vehicle
