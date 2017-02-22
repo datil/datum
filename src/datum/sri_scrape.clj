@@ -20,7 +20,7 @@
 
 (defn parse-address [addr]
   (zipmap [:provincia :canton :calle]
-          (clojure.string/split addr #" / ")))
+          (clojure.string/split addr #"([\n\r\t\s]*)/([\n\r\s]*)")))
 
 (defn store-info [row-node]
   (-> (zipmap
@@ -60,10 +60,17 @@
   (let [info-resp (fetch-url (str *base-url*
                                   "facturacion-internet/consultas/publico/ruc-datos2.jspa?accion=siguiente&lineasPagina=1&ruc="
                                   ruc))
+        ; _ (println "**********************************************************")
+        ; _ (clojure.pprint/pprint (:cookies info-resp))
+        ; _ (clojure.pprint/pprint info-resp)
+        ; _ (println "**********************************************************")
         info-resource (str-resource (:body info-resp))
         stores-resp (fetch-url (str *base-url*
                                     "facturacion-internet/consultas/publico/ruc-establec.jspa")
-                               {:cookies {"JSESSIONID" (get-in info-resp [:cookies "JSESSIONID"])}})
+                               {:cookies
+                                (:cookies info-resp)
+                                ; {"JSESSIONID" (get-in info-resp [:cookies "JSESSIONID"])}
+                                })
         stores-resource (str-resource (:body stores-resp))]
     (conj (company-info info-resource)
           (main-store stores-resource)
