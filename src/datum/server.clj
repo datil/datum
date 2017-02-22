@@ -2,7 +2,8 @@
   (:gen-class) ; for -main method in uberjar
   (:require [io.pedestal.http :as server]
             [datum.service :as service]
-            [immutant.web :refer [run]]))
+            ; [immutant.web :refer [run]]
+            ))
 
 ;; This is an adapted service map, that can be started and stopped
 ;; From the REPL you can call server/start and server/stop on this service
@@ -41,8 +42,8 @@
   (-> (dev-service)
       (server/start)))
 
-(defn start [options]
-  (run (::server/servlet runnable-service) options))
+; (defn start [options]
+;   (run (::server/servlet runnable-service) options))
 
 (defn -main
   "The entry-point for 'lein run'"
