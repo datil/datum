@@ -2,6 +2,19 @@
 
 Inteligencia para tus aplicaciones.
 
+## Despliegue
+
+En resumen
+
+```shell
+brew install heroku
+git remote add heroku https://git.heroku.com/sri-datum.git
+git push heroku master
+```
+
+Visita la guía de (heroku)[https://devcenter.heroku.com/articles/heroku-cli]
+para más información.
+
 ### Contribuyentes
 
 ```
