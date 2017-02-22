@@ -9,7 +9,7 @@
    blanco, el punto y el guión como delimitadores."
   [string]
   (-> (WordUtils/capitalizeFully string (char-array " .-/"))
-      (string/replace #"(De|Y)" #(string/lower-case (get % 0)))))
+      (string/replace #" (De|Y) " #(string/lower-case (get % 0)))))
 
 (defn fetch-url [url & [opts method]]
   (let [rm (or method http/get)
@@ -19,3 +19,5 @@
 
 (defn str-resource [str]
   (html/html-resource (java.io.StringReader. str)))
+
+(title-case "Actividades De Desarrollo De Programas De Software")
