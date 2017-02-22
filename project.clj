@@ -3,12 +3,12 @@
   :url "http://datum.co/"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.6.0"]
-                 [io.pedestal/pedestal.service "0.3.0"]
+  :dependencies [[org.clojure/clojure "1.8.0"]
+                 [io.pedestal/pedestal.service "0.4.1"]
 
                  ;; Remove this line and uncomment the next line to
                  ;; use Tomcat instead of Jetty:
-                 [io.pedestal/pedestal.jetty "0.3.0"]
+                 [io.pedestal/pedestal.jetty "0.4.1"]
                  ;; [io.pedestal/pedestal.tomcat "0.3.0"]
 
                  [ch.qos.logback/logback-classic "1.1.2" :exclusions [org.slf4j/slf4j-api]]
@@ -18,10 +18,15 @@
                  
                  ;; Libs
                  ; [org.immutant/web "2.0.0-alpha1"]
-                 [org.immutant/immutant "2.x.incremental.290"]
+                 ;[org.immutant/immutant "2.x.incremental.290"]
+                 [org.immutant/immutant "2.1.5"
+                  :exclusions [ch.qos.logback/logback-classic
+                               ch.qos.logback/logback-core
+                               org.clojure/tools.reader
+                               org.clojure/java.classpath]]
                  
                  [enlive "1.1.1"]
-                 [clj-http "1.0.0"]
+                 [clj-http "3.1.0"]
                  [org.apache.commons/commons-lang3 "3.1"]]
   :repositories [["Immutant 2.x incremental builds"
                   "http://downloads.immutant.org/incremental/"]]
