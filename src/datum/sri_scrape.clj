@@ -83,3 +83,5 @@
         (update-in [:actividad_principal] title-case)
         (update-in [:razon_social] title-case)
         (update-in [:nombre_comercial] title-case))))
+
+(clojure.pprint/pprint (info-del-contribuyente "0924447956001"))
