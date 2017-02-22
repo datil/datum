@@ -26,14 +26,15 @@
                  ;                org.clojure/java.classpath]]
 
                  [enlive "1.1.1"]
-                 [clj-http "3.1.0"]
+                 [clj-http "3.4.1"]
                  [org.apache.commons/commons-lang3 "3.1"]]
   :repositories [["Immutant 2.x incremental builds"
                   "http://downloads.immutant.org/incremental/"]]
   :min-lein-version "2.0.0"
   :resource-paths ["config", "resources"]
   :profiles {:dev {:aliases {"run-dev" ["trampoline" "run" "-m" "datum.server/run-dev"]}
-                   :dependencies [[io.pedestal/pedestal.service-tools "0.3.0"]]}
+                   :dependencies [[io.pedestal/pedestal.service-tools "0.3.0"]
+                                  [proto-repl "0.3.1"]]}
              :uberjar {:aot :all}}
   :uberjar-name "datum.jar"
   :plugins [[lein-immutant "2.1.0"]]

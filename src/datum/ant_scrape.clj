@@ -4,7 +4,7 @@
             [datum.utils :refer :all])
   (:import [org.apache.commons.lang3.text WordUtils]))
 
-(def ^:dynamic *base-url* "http://sistemaunico.ant.gob.ec:7021/PortalWEB/paginas/clientes/clp_grid_citaciones.jsp?")
+(def ^:dynamic *base-url* "http://sistemaunico.ant.gob.ec:6033/PortalWEB/paginas/clientes/clp_grid_citaciones.jsp?")
 
 (defn ensure-owner-info-length [coll]
   (if (< (count coll) 3)
@@ -25,9 +25,9 @@
   (map (comp clojure.string/trim html/text)
        (html/select
          resource
-         #{[:body :> [:table (html/nth-of-type 2)] [:tr html/first-child] :> :td.detalle_formulario]
-           [:body :> [:table (html/nth-of-type 2)] [:tr (html/nth-child 2)] :> :td.detalle_formulario]
-           [:body :> [:table (html/nth-of-type 2)] [:tr (html/nth-child 3)] :> :td.detalle_formulario]})))
+         #{[:body :> [:table html/first-of-type] [:tr html/first-child] :> :td.detalle_formulario]
+           [:body :> [:table html/first-of-type] [:tr (html/nth-child 2)] :> :td.detalle_formulario]
+           [:body :> [:table html/first-of-type] [:tr (html/nth-child 3)] :> :td.detalle_formulario]})))
 
 (defn plate-query-resource [plate]
   (-> (fetch-url (str *base-url*
@@ -38,17 +38,22 @@
 
 (defn vehicle-info [plate]
   (let [resource (plate-query-resource plate)]
-    (conj (plate-info resource)
-          (owner-info resource))))
+    (plate-info resource)
+    ; (conj (plate-info resource)
+    ;       (owner-info resource))
+    ))
 
 (defn parse-id [id]
   (get (clojure.string/split id #" \- ") 1 ""))
 
 (defn find-vehicle [plate]
   (let [info (vehicle-info plate)
-        vehicle (zipmap [:propietario :marca :color :anio_matricula :modelo
-                         :clase :fecha_matricula :anio :servicio :fecha_caducidad]
+        vehicle (zipmap [;:propietario
+                         :marca :color "año_matricula" :modelo
+                         :clase :fecha_matricula "año" :servicio :fecha_caducidad]
                         info)]
-    (-> vehicle
-        (update-in [:propietario :cedula] parse-id)
-        (update-in [:propietario :nombre] #(clojure.string/replace % #"\ " "")))))
+    ; (-> vehicle
+    ;     (update-in [:propietario :cedula] parse-id)
+    ;     (update-in [:propietario :nombre] #(clojure.string/replace % #"\ " ""))
+    ;     )
+    vehicle))

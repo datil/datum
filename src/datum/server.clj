@@ -30,15 +30,13 @@
   (future
     (while true
       (do
-       (Thread/sleep (* 1000 60 5))
-      ;  (println "ping!")
-       (slurp "http://sri-datum.herokuapp.com/")))))
+       (Thread/sleep (* 1000 60 3))
+       (println (slurp "http://sri-datum.herokuapp.com/"))))))
 
 (defn run-dev
   "The entry-point for 'lein run-dev'"
   [& args]
   (println "\nCreating your [DEV] server...")
-  (heroku-keep-alive)
   (-> (dev-service)
       (server/start)))
 

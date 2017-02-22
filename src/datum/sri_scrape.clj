@@ -1,8 +1,7 @@
 (ns datum.sri-scrape
   (:require [net.cgrand.enlive-html :as html]
             [clj-http.client :as http]
-            [datum.utils :refer :all])
-  (:import [org.apache.commons.lang3.text WordUtils]))
+            [datum.utils :refer :all]))
 
 (def ^:dynamic *base-url* "https://declaraciones.sri.gob.ec/")
 
@@ -59,18 +58,15 @@
 (defn buscar-contribuyente [ruc]
   (let [info-resp (fetch-url (str *base-url*
                                   "facturacion-internet/consultas/publico/ruc-datos2.jspa?accion=siguiente&lineasPagina=1&ruc="
-                                  ruc))
+                                  ruc)
+                             {:as "ISO-8859-1"})
         ; _ (println "**********************************************************")
-        ; _ (clojure.pprint/pprint (:cookies info-resp))
         ; _ (clojure.pprint/pprint info-resp)
         ; _ (println "**********************************************************")
         info-resource (str-resource (:body info-resp))
         stores-resp (fetch-url (str *base-url*
                                     "facturacion-internet/consultas/publico/ruc-establec.jspa")
-                               {:cookies
-                                (:cookies info-resp)
-                                ; {"JSESSIONID" (get-in info-resp [:cookies "JSESSIONID"])}
-                                })
+                               {:cookies (:cookies info-resp)})
         stores-resource (str-resource (:body stores-resp))]
     (conj (company-info info-resource)
           (main-store stores-resource)
@@ -84,6 +80,6 @@
                               info)]
     (-> contribuyente
         (update-in [:obligado_contabilidad] = "SI")
-        (update-in [:actividad_principal] clojure.string/capitalize)
+        (update-in [:actividad_principal] title-case)
         (update-in [:razon_social] title-case)
         (update-in [:nombre_comercial] title-case))))

@@ -2,7 +2,7 @@
   (:require [clojure.test :refer :all]
             [io.pedestal.test :refer :all]
             [io.pedestal.http :as bootstrap]
-            [datem.service :as service]))
+            [datum.service :as service]))
 
 (def service
   (::bootstrap/service-fn (bootstrap/create-servlet service/service)))
@@ -31,4 +31,3 @@
         "X-Frame-Options" "DENY"
         "X-Content-Type-Options" "nosniff"
         "X-XSS-Protection" "1; mode=block"})))
-

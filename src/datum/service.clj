@@ -10,20 +10,20 @@
 
 (defn home-page
   [request]
-  (ring-resp/response "Hello Immutant!"))
+  (ring-resp/response "Datum 0.2.0, at your service"))
 
 (defn info-contribuyente
   [{:keys [path-params] :as request}]
-  (try 
+  (try
     (ring-resp/response (sri/info-del-contribuyente (:ruc path-params)))
     (catch Exception e
       (stack/print-stack-trace e)
       (.printStackTrace e)
-      {:body {:error "Contribuyente no encontrado"} :status 404})))
+      {:body {:error "Servicio no disponible"} :status 503})))
 
 (defn find-vehicle
   [{:keys [path-params] :as request}]
-  (try 
+  (try
     (ring-resp/response (ant/find-vehicle (:plate path-params)))
     (catch Exception e
       (println e)
