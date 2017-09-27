@@ -48,6 +48,6 @@
   [& args]
   (println "\nCreating your server...")
   (server/start runnable-service)
-  (heroku-keep-alive)
+  ; (heroku-keep-alive)
   ; (start {:path "/"})
   )
