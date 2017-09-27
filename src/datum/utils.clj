@@ -13,7 +13,7 @@
 
 (defn fetch-url [url & [opts method]]
   (let [rm (or method http/get)
-        options (or opts {})
+        options (or opts {:insecure? true})
         response (apply rm [url options])]
     response))
 

@@ -59,14 +59,16 @@
   (let [info-resp (fetch-url (str *base-url*
                                   "facturacion-internet/consultas/publico/ruc-datos2.jspa?accion=siguiente&lineasPagina=1&ruc="
                                   ruc)
-                             {:as "ISO-8859-1"})
+                             {:as "ISO-8859-1"
+                              :insecure? true})
         ; _ (println "**********************************************************")
         ; _ (clojure.pprint/pprint info-resp)
         ; _ (println "**********************************************************")
         info-resource (str-resource (:body info-resp))
         stores-resp (fetch-url (str *base-url*
                                     "facturacion-internet/consultas/publico/ruc-establec.jspa")
-                               {:cookies (:cookies info-resp)})
+                               {:cookies (:cookies info-resp)
+                                :insecure? true})
         stores-resource (str-resource (:body stores-resp))]
     (conj (company-info info-resource)
           (main-store stores-resource)
@@ -83,5 +85,3 @@
         (update-in [:actividad_principal] title-case)
         (update-in [:razon_social] title-case)
         (update-in [:nombre_comercial] title-case))))
-
-(clojure.pprint/pprint (info-del-contribuyente "0924447956001"))
