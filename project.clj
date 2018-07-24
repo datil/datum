@@ -26,7 +26,7 @@
                  ;                org.clojure/java.classpath]]
 
                  [enlive "1.1.1"]
-                 [clj-http "3.7.0"]
+                 [clj-http "3.9.0"]
                  [org.apache.commons/commons-lang3 "3.1"]]
   :repositories [["Immutant 2.x incremental builds"
                   "http://downloads.immutant.org/incremental/"]]

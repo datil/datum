@@ -36,16 +36,16 @@
 (defn additional-stores [resource]
   (map store-info
        (html/select (rest (html/select resource [:table.reporte]))
-                         [[:tr (html/attr? :class)]])))
+                    [[:tr (html/attr? :class)]])))
 
 (defn main-store [resource]
   (store-info
        (concat
          (html/select resource [:form :> [:table (html/nth-of-type 2)]
-                                [:tr html/last-child]])
+                                [:tr html/last-child]]))))
          ; (html/select resource [:form :> [:table (html/nth-of-type 3)]
          ;                        [:tr (html/attr? :class)]])
-         )))
+
 
 (defn stores [resource]
   (map store-info
@@ -68,6 +68,7 @@
         stores-resp (fetch-url (str *base-url*
                                     "facturacion-internet/consultas/publico/ruc-establec.jspa")
                                {:cookies (:cookies info-resp)
+                                :as "ISO-8859-1"
                                 :insecure? true})
         stores-resource (str-resource (:body stores-resp))]
     (conj (company-info info-resource)
