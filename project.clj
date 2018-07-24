@@ -1,4 +1,4 @@
-(defproject datum "0.2.0"
+(defproject datum "0.2.1"
   :description "Datos para negocios del siglo XXI"
   :url "http://datum.co/"
   :license {:name "Eclipse Public License"
